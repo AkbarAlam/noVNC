@@ -20,7 +20,7 @@ usage() {
     echo "                          Default: localhost:5900"
     echo "    --cert CERT           Path to combined cert/key file"
     echo "                          Default: self.pem"
-    echo "    --web WEB             Path to web files (e.g. vnc.html)"
+    echo "    --web WEB             Path to web files (e.g. index.html)"
     echo "                          Default: ./"
     echo "    --ssl-only            Disable non-https connections."
     echo "                                    "
@@ -80,19 +80,19 @@ trap "cleanup" TERM QUIT INT EXIT
 
 # Find vnc.html
 if [ -n "${WEB}" ]; then
-    if [ ! -e "${WEB}/vnc.html" ]; then
-        die "Could not find ${WEB}/vnc.html"
+    if [ ! -e "${WEB}/index.html" ]; then
+        die "Could not find ${WEB}/index.html"
     fi
-elif [ -e "$(pwd)/vnc.html" ]; then
+elif [ -e "$(pwd)/index.html" ]; then
     WEB=$(pwd)
-elif [ -e "${HERE}/../vnc.html" ]; then
+elif [ -e "${HERE}/../index.html" ]; then
     WEB=${HERE}/../
-elif [ -e "${HERE}/vnc.html" ]; then
+elif [ -e "${HERE}/index.html" ]; then
     WEB=${HERE}
-elif [ -e "${HERE}/../share/novnc/vnc.html" ]; then
+elif [ -e "${HERE}/../share/novnc/index.html" ]; then
     WEB=${HERE}/../share/novnc/
 else
-    die "Could not find vnc.html"
+    die "Could not find index.html"
 fi
 
 # Find self.pem
@@ -153,9 +153,9 @@ fi
 
 echo -e "\n\nNavigate to this URL:\n"
 if [ "x$SSLONLY" == "x" ]; then
-    echo -e "    http://$(hostname):${PORT}/vnc.html?host=$(hostname)&port=${PORT}\n"
+    echo -e "    http://$(hostname):${PORT}/index.html?host=$(hostname)&port=${PORT}\n"
 else
-    echo -e "    https://$(hostname):${PORT}/vnc.html?host=$(hostname)&port=${PORT}\n"
+    echo -e "    https://$(hostname):${PORT}/index.html?host=$(hostname)&port=${PORT}\n"
 fi
 
 echo -e "Press Ctrl-C to exit\n\n"
